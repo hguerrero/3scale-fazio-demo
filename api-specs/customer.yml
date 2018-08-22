@@ -21,16 +21,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/customer'
+                type: string
               examples:
                 id_12345:
                   summary: Returns 12345
                   description: This example returns customer 12345
-                  value:
-                    id: 12345
-                    name: Fazio's Customer 12345
-                    address: 'Street #12345, City, State'
-                    phone: +155512345
+                  value: '{"id": "12345", "name": "Fazios Customer 12345", "address":
+                    "Street #12345, City, State", "phone": "+155512345"}'
     post:
       requestBody:
         content:
@@ -41,11 +38,8 @@ paths:
               customer_67890:
                 summary: create customer 67890
                 description: creates a new customer with id 67890
-                value:
-                  id: 67890
-                  name: Fazio's Customer 67890
-                  address: 'Street #67890, City, State'
-                  phone: +155567890
+                value: '{"id": "67890", "name": "Fazios Customer 67890", "address":
+                  "Street #67890, City, State", "phone": "+155567890"}'
         required: true
       responses:
         201:
@@ -56,11 +50,8 @@ paths:
                 $ref: '#/components/schemas/customer'
               examples:
                 customer_67890:
-                  value:
-                    id: 67890
-                    name: Fazio's Customer 67890
-                    address: 'Street #67890, City, State'
-                    phone: +155567890
+                  value: '{"id": "67890", "name": "Fazios Customer 67890", "address":
+                    "Street #67890, City, State", "phone": "+155567890"}'
 components:
   schemas:
     customer:
