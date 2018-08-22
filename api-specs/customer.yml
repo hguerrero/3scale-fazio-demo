@@ -38,8 +38,8 @@ paths:
               customer_67890:
                 summary: create customer 67890
                 description: creates a new customer with id 67890
-                value: '{"id": "67890", "name": "Fazios Customer 67890", "address":
-                  "Street #67890, City, State", "phone": "+155567890"}'
+                value: '{"name": "Fazios Customer 67890", "address": "Street #67890,
+                  City, State", "phone": "+155567890"}'
         required: true
       responses:
         201:
