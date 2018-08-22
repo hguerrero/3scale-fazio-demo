@@ -13,7 +13,7 @@ paths:
         schema:
           type: string
         examples:
-          id 12345:
+          id_12345:
             value: 12345
       responses:
         200:
@@ -23,7 +23,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/customer'
               examples:
-                id 12345:
+                id_12345:
                   summary: Returns 12345
                   description: This example returns customer 12345
                   value:
@@ -38,7 +38,7 @@ paths:
             schema:
               $ref: '#/components/schemas/customer'
             examples:
-              customer 67890:
+              customer_67890:
                 summary: create customer 67890
                 description: creates a new customer with id 67890
                 value:
@@ -55,7 +55,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/customer'
               examples:
-                customer 67890:
+                customer_67890:
                   value:
                     id: 67890
                     name: Fazio's Customer 67890
