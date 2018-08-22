@@ -1,0 +1,119 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "customer-mock",
+    "description" : "customer example for mocking",
+    "version" : "1.0.0"
+  },
+  "paths" : {
+    "/customer" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "schema" : {
+            "type" : "string"
+          },
+          "examples" : {
+            "id_12345" : {
+              "value" : 12345
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "returns customer",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/customer"
+                },
+                "examples" : {
+                  "id_12345" : {
+                    "summary" : "Returns 12345",
+                    "description" : "This example returns customer 12345",
+                    "value" : {
+                      "id" : "12345",
+                      "name" : "Fazio's Customer 12345",
+                      "address" : "Street #12345, City, State",
+                      "phone" : "+155512345"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/customer"
+              },
+              "examples" : {
+                "customer_67890" : {
+                  "summary" : "create customer 67890",
+                  "description" : "creates a new customer with id 67890",
+                  "value" : {
+                    "id" : "67890",
+                    "name" : "Fazio's Customer 67890",
+                    "address" : "Street #67890, City, State",
+                    "phone" : "+155567890"
+                  }
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "customer created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/customer"
+                },
+                "examples" : {
+                  "customer_67890" : {
+                    "value" : {
+                      "id" : "67890",
+                      "name" : "Fazio's Customer 67890",
+                      "address" : "Street #67890, City, State",
+                      "phone" : "+155567890"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "customer" : {
+        "title" : "Root Type for customer",
+        "description" : "The root of the customer type's schema.",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
