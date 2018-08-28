@@ -16,12 +16,15 @@
   {% assign include_service = true %}
   {% if service.features.size > 0 %}
     {% assign service_sections = service.features | map:'system_name'| join: ', ' %}
-    {% unless service_sections contains 'public' %}
+    {% unless service_sections contains 'access_public' %}
       {% for feature in service.features %}
-        {% unless user_sections contains feature.system_name %}
-          {% assign include_service = false %}
-          {% break %}
-        {% endunless %}
+        {% if feature.system_name contains 'access' %}
+          {% assign feature_name = feature.system_name | remove_first: "access_" %}
+          {% unless user_sections contains feature_name %}
+            {% assign include_service = false %}
+            {% break %}
+          {% endunless %}
+        {% endif %}
       {% endfor %}
       {% if include_service == false %}
         {% continue %}

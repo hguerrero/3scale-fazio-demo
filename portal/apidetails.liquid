@@ -31,7 +31,7 @@
 {% raw %}
   <div id="documentation">
     <h2>Interactive documentation</h2>
-      Making API documentation user friendly, interactive, intuitive, and clear.
+      <p>Making API documentation user friendly, interactive, intuitive, and clear.</p>
       <p id="swagger-ui-containers"></p>
   </div>
 {% endraw %}
@@ -256,6 +256,7 @@
         $("#api_info").toggle(); //hide api info section
         $(".footer").toggle(); // hide footer section
         $(".heading h2, .options").hide();
+        $("#default_delete_customer").append("<p>Warning this operation will delete the data.</p>");
       },
       onFailure: function(data) {
         log("Unable to LoadSwaggerUI");
