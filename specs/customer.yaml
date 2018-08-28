@@ -1,0 +1,71 @@
+---
+swagger: '2.0'
+info:
+  title: customer
+  description: |-
+    customer – resource-oriented REST API
+    - Verbs = GET, POST, PUT, DELETE, HEAD, OPTIONS o Data = customer id, name, address, phone
+  version: 1.0.0
+paths:
+  /customer:
+    get:
+      parameters:
+      - name: id
+        in: query
+        description: customer id
+        type: string
+      responses:
+        200:
+          description: customer data
+          schema:
+            $ref: '#/definitions/customer'
+          examples: {}
+    put:
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/customer'
+      responses:
+        204:
+          description: customer updated
+    post:
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/customer'
+      responses:
+        201:
+          description: customer created
+    delete:
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/customer'
+      responses:
+        204:
+          description: customer deleted
+    options:
+      responses:
+        200:
+          description: options
+    head:
+      responses:
+        200:
+          description: head
+definitions:
+  customer:
+    title: Root Type for customer
+    description: The root of the customer type's schema.
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      address:
+        type: string
+      phone:
+        type: string

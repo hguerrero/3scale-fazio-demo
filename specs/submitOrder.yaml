@@ -1,0 +1,74 @@
+---
+swagger: '2.0'
+info:
+  title: submitOrder
+  description: |-
+    submitOrder – action-oriented REST API o Verbs = POST, OPTIONS
+    o Parameters = “validateOnly=yes” validates order without submitting
+    o Request payload = customer id, shipping address, order header data, and a
+    collection of line items (assume details within these structures). o Response payload = order id (when submitted)
+    o Assume appropriate error codes/handling if order fails validation
+  version: 1.0.0
+paths:
+  /submitOrder:
+    post:
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/order-submit'
+      - name: validateOnly
+        in: query
+        type: string
+      responses:
+        201:
+          description: order created
+          schema:
+            $ref: '#/definitions/order-id'
+        204:
+          description: order validated
+        400:
+          description: order invalid
+    options:
+      responses:
+        200:
+          description: options
+definitions:
+  order-item:
+    title: Root Type for order-item
+    description: The root of the order-item type's schema.
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  order-header:
+    title: Root Type for order-header
+    description: The root of the order-header type's schema.
+    type: object
+    properties:
+      id:
+        type: string
+  order-submit:
+    title: Root Type for order-submit
+    description: The root of the order-submit type's schema.
+    type: object
+    properties:
+      customer_id:
+        type: string
+      shipping_address:
+        type: string
+      order_header_data:
+        $ref: '#/definitions/order-header'
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/order-item'
+  order-id:
+    title: Root Type for order-id
+    description: The root of the order-id type's schema.
+    type: object
+    properties:
+      id:
+        type: string

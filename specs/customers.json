@@ -1,0 +1,67 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "customers",
+    "description": "customers – list-oriented REST API\no Verbs = GET, HEAD, OPTIONS\no Data = list of (customer id, name)\no Parameters = country and revenue as search options",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/customers": {
+      "get": {
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "revenue",
+            "in": "query",
+            "type": "number",
+            "format": "double"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "customers list",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/customer"
+              }
+            }
+          }
+        }
+      },
+      "options": {
+        "responses": {
+          "200": {
+            "description": "options"
+          }
+        }
+      },
+      "head": {
+        "responses": {
+          "200": {
+            "description": "head"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "customer": {
+      "title": "Root Type for customer",
+      "description": "The root of the customer type's schema.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

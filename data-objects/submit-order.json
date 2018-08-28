@@ -1,0 +1,7 @@
+{
+    "customer_id": "12345", 
+    "shipping_address": "Street 1235", 
+    "order_header_data": {},
+    "items": [
+    ]
+}

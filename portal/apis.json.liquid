@@ -1,0 +1,84 @@
+{
+    "name": "{{ provider.name }}",
+    "description": "This is an inventory of APIs available as part of the Fazio World Company network.",
+    "image": "http://i.imgur.com/ntV92b4.png",
+    "tags": [
+        "Enterprise"
+    ],
+    "created": "2017-01-24",
+    "modified": "2017-01-24",
+    "url": "https://{{ provider.domain }}/catalog/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+{% assign user_sections = current_user.sections | join: ', ' %}
+{% assign first_time_visitor = true %}
+{% for service in provider.services %}
+  {% assign include_service = true %}
+  {% if service.features.size > 0 %}
+    {% assign service_sections = service.features | map:'system_name'| join: ', ' %}
+    {% unless service_sections contains 'public' %}
+      {% for feature in service.features %}
+        {% unless user_sections contains feature.system_name %}
+          {% assign include_service = false %}
+          {% break %}
+        {% endunless %}
+      {% endfor %}
+      {% if include_service == false %}
+        {% continue %}
+      {% endif %}
+    {% endunless %}
+    {% if first_time_visitor == true %}
+    {% else %}
+        ,
+    {% endif %}
+    {% assign first_time_visitor = false %}
+        {
+            "name": "{{ service.name }}",
+            "description": "{{ service.description }}",
+            "X-3scale": {
+                "service_id": {{ service.id }},
+                "swagger_system_name": "{{ service.system_name }}",
+                "long_name": "{{ service.system_name }}"
+            },
+            "image": "/images/customer.png",
+            "humanURL": "https://{{ provider.domain }}",
+            "baseURL": "https://{{ provider.domain }}",
+            "tags": [
+                {% for feature in service.features %}
+                    "{{ feature.name }}"
+      				{% if forloop.last == true %}
+                    {% else %}
+                        ,
+                    {% endif %}
+                {% endfor %}
+            ],
+            "properties": [
+                {
+                    "type": "X-signup",
+                    "url": "https://{{ provider.domain }}"
+                },
+                {
+                    "type": "Swagger",
+                    "url": "https://api.zalando.com/schema/swagger.json"
+                }
+            ],
+            "contact": [
+                {
+                    "FN": "{{ provider.name }}",
+                    "email": "{{ provider.support_email }}",
+                    "X-twitter": "faziocompany"
+                }
+            ]
+        }
+  {% endif %}
+{% endfor %}
+    ],
+    "include": [],
+    "maintainers": [
+        {
+            "FN": "{{ provider.name }}",
+            "email": "{{ provider.support_email }}",
+            "X-twitter": "faziocompany"
+        }
+    ]
+}
