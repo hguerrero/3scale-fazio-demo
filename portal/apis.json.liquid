@@ -37,13 +37,13 @@
     {% assign first_time_visitor = false %}
         {
             "name": "{{ service.name }}",
-            "description": "{{ service.description }}",
+            "description": "{{ service.description }}",
             "X-3scale": {
                 "service_id": {{ service.id }},
                 "swagger_system_name": "{{ service.system_name }}",
                 "long_name": "{{ service.system_name }}"
             },
-            "image": "/images/customer.png",
+            "image": "https://hub.meltano.com/assets/logos/extractors/restapi.png",
             "humanURL": "https://{{ provider.domain }}",
             "baseURL": "https://{{ provider.domain }}",
             "tags": [
