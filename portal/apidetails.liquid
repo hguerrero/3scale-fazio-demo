@@ -1,4 +1,8 @@
-{% active_docs version: "2.0" %}
+{% content_for javascripts %}
+    {{ 'active_docs.js' | javascript_include_tag }}
+	{{ 'https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js' | javascript_include_tag }}
+{% endcontent_for %}
+
 <div id="content"></div>
 
 <style media="screen">
@@ -22,7 +26,7 @@
 <script id="aboutTpl" type="text/template">
 {% raw %}
   <div id="about">
-      <img src="/images/customer_main.png" alt="Customer logo" class="img-responsive center-block"/>
+      <img src="{{image}}" alt="Customer logo" class="img-responsive center-block"/>
   </div>
 {% endraw %}
 </script>
@@ -32,7 +36,7 @@
   <div id="documentation">
     <h2>Interactive documentation</h2>
       <p>Making API documentation user friendly, interactive, intuitive, and clear.</p>
-      <p id="swagger-ui-containers"></p>
+      <div id="swagger-ui-containers"></div>
   </div>
 {% endraw %}
 </script>
@@ -196,7 +200,7 @@
      Handlebars.registerPartial("rightPanel", $("#detailsPanelTpl").html());
      Handlebars.registerPartial("leftMenu", $("#leftmenuTpl").html());
      Handlebars.registerPartial("error", $("#errorTpl").html());
-    $("#swagger-ui-container").parent().remove();
+    //$("#swagger-ui-container").parent().remove();
     var service_id = Number(extractServiceID())
     var url = '/catalog/apis.json'
 //4a.function creation
@@ -224,7 +228,7 @@
      });
   })
   function filterArraybyThreescaleServiceId(arr,service_id){
-    return _.filter(arr, function(obj){ if(typeof obj["X-3scale"] != "undefined"){return obj["X-3scale"].service_id === service_id}});
+    return arr.filter((obj) => {if(typeof obj["X-3scale"] != "undefined") return obj["X-3scale"].service_id === service_id });
   }
   function extractServiceID(){
     var url = window.location.href
@@ -247,7 +251,30 @@
     $("#swagger-ui-containers").append(swaggerSectionHtml(domId));
     var swaggerObjName = 'swaggerUi' + specSystemName;
     var domPreCodeId = '#' + domId + ' pre code';
-    var swaggerObj = new SwaggerUi({
+    SwaggerUI({
+      url: getSwaggerSpecUrl(specSystemName),
+      dom_id: '#'+domId,
+	  supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+      onComplete: function(swaggerApi, swaggerUi) {
+        $(domPreCodeId).each(function(i, e) {hljs.highlightBlock(e)});
+        $(".information-container").toggle(); //hide api info section
+        $(".footer").toggle(); // hide footer section
+        $("h3.opblock-tag").hide();
+        $("#default_delete_customer").append("<p>Warning this operation will delete the data.</p>");
+      },
+      onFailure: function(data) {
+        log("Unable to LoadSwaggerUI");
+      },
+      validatorUrl: null,
+      docExpansion: "list",
+      transport: function(httpClient, obj) {
+        return ApiDocsProxy.execute(httpClient, obj);
+      }
+    });
+    /* 
+    var swaggerObjName = 'swaggerUi' + specSystemName;
+    var domPreCodeId = '#' + domId + ' pre code';
+    var swaggerObj = new SwaggerUI({
       url: getSwaggerSpecUrl(specSystemName),
       dom_id: domId,
       supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
@@ -269,5 +296,6 @@
     });
     window[swaggerObjName] = swaggerObj;
     window[swaggerObjName].load();
+    */
   }
 </script>
